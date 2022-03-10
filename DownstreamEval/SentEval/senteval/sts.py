@@ -29,6 +29,8 @@ class STSEval(object):
         self.samples = []
 
         for dataset in self.datasets:
+            print(dataset)
+            
             sent1, sent2 = zip(*[l.split("\t") for l in
                                io.open(fpath + '/STS.input.%s.txt' % dataset,
                                        encoding='utf8').read().splitlines()])
