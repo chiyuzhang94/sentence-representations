@@ -35,7 +35,7 @@ def get_args(argv):
     parser.add_argument('--batch_size', type=int, default=64)
     # evaluate the pretrained_model
     parser.add_argument('--pretrained_dir', type=str, default="")
-    parser.add_argument('--pretrained_model', type=str, default='RoBERTa', choices=["BERT", "SBERT", "PairSupCon"])
+    parser.add_argument('--pretrained_model', type=str, default='RoBERTa')
     parser.add_argument('--model_path', type=str, default='bertbase')
     args = parser.parse_args(argv)
     return args
