@@ -35,16 +35,16 @@ def get_args(argv):
     parser.add_argument('--batch_size', type=int, default=64)
     # evaluate the pretrained_model
     parser.add_argument('--pretrained_dir', type=str, default="")
-    parser.add_argument('--pretrained_model', type=str, default='PairSupCon', choices=["BERT", "SBERT", "PairSupCon"])
-    parser.add_argument('--bert', type=str, default='bertbase')
+    parser.add_argument('--pretrained_model', type=str, default='RoBERTa', choices=["BERT", "SBERT", "PairSupCon"])
+    parser.add_argument('--model_path', type=str, default='bertbase')
     args = parser.parse_args(argv)
     return args
 
 
 def get_bert(args):
-    config = AutoConfig.from_pretrained(BERT_CLASS[args.bert])
-    model = AutoModel.from_pretrained(BERT_CLASS[args.bert], config=config)
-    tokenizer = AutoTokenizer.from_pretrained(BERT_CLASS[args.bert])
+    config = AutoConfig.from_pretrained(args.model_path)
+    model = AutoModel.from_pretrained(args.model_path, config=config)
+    tokenizer = AutoTokenizer.from_pretrained(args.model_path)
     return model, tokenizer
 
 
@@ -56,19 +56,20 @@ def get_sbert(model_name):
 
 def get_checkpoint(args): 
     
-    if args.pretrained_model in ["BERT", "PairSupCon"]: #evaluate vanilla BERT or PairSupCon
-        model, tokenizer = get_bert(args)
-        resname = 'sts_{}_{}'.format(args.pretrained_model, args.bert)
-        print("...... loading BERT", args.bert, "resname ", resname)
+    # if args.pretrained_model in ["BERT", "PairSupCon", "RoBERTa"]: #evaluate vanilla BERT or PairSupCon
+        
 
-    elif args.pretrained_model == "SBERT": # evaluate SentenceBert 
-        resname = 'sts{}_SBERT_{}'.format(args.sts_only, args.bert)
+    if args.pretrained_model == "SBERT": # evaluate SentenceBert 
+        resname = 'sts{}_SBERT_{}'.format(args.sts_only, args.model_path)
         model = get_sbert(args)
         tokenizer = None
-        print("...... loading SBERT", args.bert, "resname ", resname)
+        print("...... loading SBERT", args.model_path, "resname ", resname)
 
     else: 
-        raise Exception("please specify the pretrained model you want to evaluate")
+        model, tokenizer = get_bert(args)
+        resname = 'sts_{}'.format(args.pretrained_model)
+        print("...... loading BERT", args.model_path, "resname ", resname)
+        # raise Exception("please specify the pretrained model you want to evaluate")
              
     model.to(args.device)
     return model, tokenizer, resname
