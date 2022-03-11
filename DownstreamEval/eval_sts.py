@@ -34,7 +34,7 @@ if __name__ == "__main__":
     args.device = torch.device(f"cuda:{args.device_id}") if torch.cuda.is_available() else torch.device("cpu")   
     args.resprefix = "sts"
     
-    transfer_tasks = ['STS12', 'STS13', 'STS14', 'STS15', 'STS16', 'SICKRelatedness', 'STSBenchmark']
+    transfer_tasks = ['STS12', 'STS13', 'STS14', 'STS15', 'STS16', 'SICKRelatedness', 'STSBenchmark', 'MR', 'CR', 'SUBJ', 'MPQA', 'SST2', 'SST5', 'TREC', 'MRPC', 'SICKEntailment']
     try:
         os.makedirs(args.respath, exist_ok = True)
         print("Directory '%s' created successfully" %args.respath)
