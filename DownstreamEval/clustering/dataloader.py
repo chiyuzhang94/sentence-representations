@@ -21,6 +21,7 @@ def cluster_data_loader(datapath, text, label, batch_size):
     train_data = pd.read_csv(datapath)
     train_text = train_data[text].fillna('.').values
     train_label = train_data[label].astype(int).values
+    train_label = [x-1 for x in train_label]
     print(len(train_text), len(train_label))
 
     train_dataset = TextClustering(train_text, train_label)
