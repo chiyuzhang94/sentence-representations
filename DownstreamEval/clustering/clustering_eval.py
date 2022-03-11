@@ -66,6 +66,8 @@ def clustering_eval(bert, tokenizer, datanames, resname, args, CLUSTER_DATASETS)
             clures.append(scores)
             index.append(count)
             count += 1
+        print(data, acc)
+
     df = pd.DataFrame(clures, index=index, columns=list(scores.keys()))
     dfstats = df.groupby(["data"])["ACC", "NMI", "AMI", "ARI"].agg(["mean", "std"]).round(4)
     print("--clustering--\n", dfstats)
