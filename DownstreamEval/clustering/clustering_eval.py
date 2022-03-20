@@ -27,7 +27,8 @@ def get_embeddings(transformer, tokenizer, train_loader, device):
             features = tokenizer.batch_encode_plus(text, max_length=64, return_tensors='pt', padding='max_length', truncation=True)
             input_ids, attention_mask = features['input_ids'].to(device), features['attention_mask'].to(device)
             bert_output = transformer.forward(input_ids=input_ids, attention_mask=attention_mask)
-            corpus_embeddings = torch.sum(bert_output[0]*attention_mask.unsqueeze(-1), dim=1) / torch.sum(attention_mask.unsqueeze(-1), dim=1)
+            #corpus_embeddings = torch.sum(bert_output[0]*attention_mask.unsqueeze(-1), dim=1) / torch.sum(attention_mask.unsqueeze(-1), dim=1)
+            corpus_embeddings = bert_output[1]
             corpus_embeddings = corpus_embeddings.detach().cpu().numpy()
             
         if i == 0:

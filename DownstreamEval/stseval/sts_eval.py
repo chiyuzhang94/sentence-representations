@@ -32,7 +32,8 @@ def sts_eval(args, transfer_tasks, model, tokenizer):
         input_ids, attention_mask = features['input_ids'].to(params['device']), features['attention_mask'].to(params['device'])
         bert_output = params.transformer.forward(input_ids=input_ids, attention_mask=attention_mask)
         attention_mask = attention_mask.unsqueeze(-1)
-        embeddings = torch.sum(bert_output[0]*attention_mask, dim=1) / torch.sum(attention_mask, dim=1)
+        # embeddings = torch.sum(bert_output[0]*attention_mask, dim=1) / torch.sum(attention_mask, dim=1)
+        embeddings = bert_output[1]
         return embeddings.detach().cpu().numpy()
 
 
