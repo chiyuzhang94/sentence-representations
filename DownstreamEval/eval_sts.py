@@ -48,7 +48,4 @@ if __name__ == "__main__":
     
     df = parse_results(results, resname)
     print(df.round(8))
-
-    
-
         
