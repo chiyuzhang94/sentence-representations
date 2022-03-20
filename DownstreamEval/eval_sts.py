@@ -47,7 +47,7 @@ if __name__ == "__main__":
     np.save(args.respath+resname+'.npy', results)
     
     df = parse_results(results, resname)
-    print(df.round(4))
+    print(df.round(8))
 
     
 

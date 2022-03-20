@@ -50,13 +50,3 @@ def sts_eval(args, transfer_tasks, model, tokenizer):
     eval_results = se.eval(transfer_tasks)
 
     return eval_results
-
-
-
-
-
-    
-    
-    
-    
-
